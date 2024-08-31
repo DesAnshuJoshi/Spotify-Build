@@ -59,7 +59,7 @@ export const Sidebar: React.FC<SidebarProps> = ({ children, songs }) => {
         player.activeId && 'h-[calc(100%-80px)]'
       )}
     >
-      <div className="hidden md:flex flex-col gap-y-2 bg-black h-full w-[300px] p-2">
+      <div className="hidden md:flex flex-col gap-y-2 bg-black h-full w-[300px] p-2 pr-1">
         <Box>
           <div className="flex flex-col gap-y-4 px-5 py-4">
             {routes.map((item) => (
@@ -71,7 +71,7 @@ export const Sidebar: React.FC<SidebarProps> = ({ children, songs }) => {
           <Library songs={songs} />
         </Box>
       </div>
-      <main className="h-full flex-1 overflow-y-auto py-2">{children}</main>
+      <main className="h-full flex-1 overflow-y-auto p-2 ps-1">{children}</main>
     </div>
   );
 };
