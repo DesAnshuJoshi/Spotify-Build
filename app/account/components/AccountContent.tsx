@@ -16,7 +16,7 @@ import { postData } from '@/libs/helpers';
 export const AccountContent = () => {
   const router = useRouter();
   const subscribeModal = useSubscribeModal();
-  const { isLoading, user, subscription } = useUser();
+  const { isLoading, user, userDetails, subscription } = useUser();
 
   const [loading, setLoading] = useState(false);
 
@@ -24,7 +24,7 @@ export const AccountContent = () => {
     if (!isLoading && !user) {
       router.replace('/');
     }
-  }, []);
+  }, [isLoading, user, router]);
 
   const redirectToCustomerPortal = async () => {
     setLoading(true);
@@ -42,9 +42,16 @@ export const AccountContent = () => {
   };
   return (
     <div className="mb-7 px-6">
+
+      {userDetails && (
+        <div className="mb-4">
+          <p className="text-lg font-semibold">Hello, {userDetails.full_name || `${userDetails.first_name} ${userDetails.last_name}`}!</p>
+        </div>
+      )}
+
       {!subscription && (
         <div className="flex flex-col gap-y-4">
-          <p>No active plan.</p>
+          <p>You don&apos;t have an active plan.</p>
           <Button onClick={subscribeModal.onOpen} className="w-[300px]">
             Subscribe
           </Button>

@@ -1,4 +1,5 @@
-import { User } from '@supabase/auth-helpers-nextjs';
+// import { User } from '@supabase/auth-helpers-nextjs';
+import { User as SupabaseAuthUser } from '@supabase/auth-helpers-nextjs';
 import { useSessionContext, useUser as useSupaUser } from '@supabase/auth-helpers-react';
 import { UserDetails, Subscription } from '@/types';
 import { useState, createContext, useEffect, useContext } from 'react';
@@ -6,7 +7,8 @@ import { useState, createContext, useEffect, useContext } from 'react';
 //* Define a type for the user context
 type UserContextType = {
   accessToken: string | null;
-  user: User | null;
+  // user: User | null;
+  user: UserDetails | null;
   userDetails: UserDetails | null;
   isLoading: boolean;
   subscription: Subscription | null;
@@ -26,7 +28,8 @@ export const MyUserContextProvider = (props: Props) => {
   const { session, isLoading: isLoadingUser, supabaseClient: supabase } = useSessionContext();
 
   //* Use the Supabase user hook to get the user
-  const user = useSupaUser();
+  // const user = useSupaUser();
+  const authUser = useSupaUser() as SupabaseAuthUser;
 
   //* Get the access token from the session, or null if it doesn't exist
   const accessToken = session?.access_token ?? null;
@@ -48,7 +51,7 @@ export const MyUserContextProvider = (props: Props) => {
   //* Fetch user info
   useEffect(() => {
     //* If user exists and data is not loading, fetch data
-    if (user && !isLoadingData && !userDetails && !subscription) {
+    if (authUser && !isLoadingData && !userDetails && !subscription) {
       setIsLoadingData(true);
 
       //* Use Promise.allSettled to fetch user details and subscription
@@ -73,17 +76,18 @@ export const MyUserContextProvider = (props: Props) => {
           setIsLoadingData(false);
         }
       );
-    } else if (!user && !isLoadingUser && !isLoadingData) {
+    } else if (!authUser && !isLoadingUser && !isLoadingData) {
       //* If user does not exist and data is not loading, reset user details and subscription
       setUserDetails(null);
       setSubscription(null);
     }
-  }, [user, isLoadingUser]); //* Run effect when user or loading user state changes
+  }, [authUser, isLoadingUser]); //* Run effect when user or loading user state changes
 
   //* Define the value to pass to the user context
   const value = {
     accessToken,
-    user,
+    // user,
+    user: userDetails,
     userDetails,
     isLoading: isLoadingUser || isLoadingData,
     subscription,

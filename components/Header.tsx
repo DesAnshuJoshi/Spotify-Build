@@ -110,8 +110,16 @@ export const Header: React.FC<HeaderProps> = ({ children, className }) => {
               <Button onClick={handleLogout} className="bg-white px-6 py-2">
                 Logout
               </Button>
-              <Button onClick={() => router.push('/account')} className="bg-white">
-                <FaUserAlt />
+              <Button 
+                onClick={() => router.push('/account')} 
+                className={user.avatar_url ? "p-0 border-none" : "bg-white"}
+              >
+                {/* <FaUserAlt /> */}
+                {user.avatar_url ? (
+                  <img src={user.avatar_url} alt="User Avatar" className="w-10 h-10 rounded-full object-cover"/>
+                ) : (
+                  <FaUserAlt className="w-4 h-4" />
+                )}
               </Button>
             </div>
           ) : (
