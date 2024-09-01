@@ -26,6 +26,7 @@ export const SongItem: React.FC<SongItemProps> = ({ data, onClick }) => {
         flex-col
         items-center
         justify-center
+        rounded-md
         overflow-hidden
         gap-x-4
         bg-neutral-400/5
@@ -53,11 +54,11 @@ export const SongItem: React.FC<SongItemProps> = ({ data, onClick }) => {
           alt="Image"
         />
       </div>
-      <div className="flex flex-col items-start w-full pt-4 gap-y-1">
+      <div className="flex flex-col items-start w-full pt-2 gap-y-1">
         <p className="font-semibold truncate w-full">{data.title}</p>
-        <p className="text-neutral-400 text-sm pb-4 w-full truncate">By {data.author}</p>
+        <p className="text-neutral-400 text-sm pb-1 w-full truncate">By {data.author}</p>
       </div>
-      <div className="absolute bottom-24 right-5">
+      <div className="absolute bottom-20 right-5">
         <PlayButton />
       </div>
     </div>
